@@ -1,5 +1,5 @@
 /** Performs some basic linked list tests. */
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T>{
 		private T[] items;
 		private int size;
 		private int nextFirst;
@@ -13,16 +13,41 @@ public class ArrayDeque<T> implements Deque<T>{
 		nextLast = 5;
 		items = (T[]) new Object[8];
 	}
+	/** Node forward;
+	 *
+	 */
+	private  int onePlus(int index){
+		if (index==items.length-1){
+			return 0;
+		}else return index + 1;
+	}
 
+	private  int oneMinus(int index){
+		if (index == 0){
+			return items.length - 1;
+		}else {
+			return index - 1;
+		}
+	}
 	/** Resize our backing array so that it is
 	 * of the given capacity. */
 	private void resize(int capacity) {
 		T[] a = (T[]) new Object[capacity];
-		System.arraycopy(items, 0, a, 0, nextLast-1);
-		System.arraycopy(items, nextFirst, a, items.length+nextLast-1, items.length - nextFirst);
-		nextFirst = items.length + nextLast-1;
-		nextLast = nextLast - 1;
-		items = a;
+		int currentFirst = onePlus(nextFirst);
+		int currentLast = oneMinus(nextLast);
+
+		if (currentFirst >= currentLast) {
+			System.arraycopy(items, 0, a, 0, currentLast + 1);
+			System.arraycopy(items, currentFirst, a, items.length + currentFirst, items.length - currentFirst);
+			nextFirst = items.length + currentLast;
+			items = a;
+		}else{
+			int currentLength = currentLast - currentFirst + 1;
+			System.arraycopy(items, currentFirst, a, 0, currentLength);
+			items = a;
+			nextFirst = items.length - 1;
+			nextLast = currentLast;
+		}
 	}
 
 	/** Adds an item of type T to the front of the deque. */
@@ -110,5 +135,45 @@ public class ArrayDeque<T> implements Deque<T>{
 		return items[index];
 	}
 
+	public static void main(String[] args) {
+		ArrayDeque<Integer> test1 = new ArrayDeque<Integer>();
+		/** addLast loop
+		test1.addLast(0);
+		test1.addLast(1);
+		test1.addLast(2);
+		test1.addLast(3);
+		test1.addLast(4);
+		test1.addLast(5);
+		test1.addLast(6);
+		test1.addLast(7);
+		test1.removeFirst();
+		test1.addLast(9);
+		test1.addLast(10);
+		test1.removeFirst();
 
+		test1.printDeque();
+		System.out.println("");
+		System.out.println("size is " + test1.size());
+		 **/
+
+		/** addFirst loop
+		 test1.addFirst(0);
+		 test1.addFirst(1);
+		 test1.addFirst(2);
+		 test1.addFirst(3);
+		 test1.addFirst(4);
+		 test1.addFirst(5);
+		 test1.addFirst(6);
+		 test1.addFirst(7);
+		 test1.removeLast();
+		 test1.addFirst(9);
+		 test1.addFirst(10);
+		 test1.removeLast();
+
+		 test1.printDeque();
+		 System.out.println("");
+		 System.out.println("size is " + test1.size());
+**/
+
+	}
 }
