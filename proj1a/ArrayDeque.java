@@ -134,10 +134,10 @@ public class ArrayDeque<T>{
 	public T get(int index){
 		return items[index];
 	}
-
+/**
 	public static void main(String[] args) {
 		ArrayDeque<Integer> test1 = new ArrayDeque<Integer>();
-		/** addLast loop
+
 		test1.addLast(0);
 		test1.addLast(1);
 		test1.addLast(2);
@@ -154,9 +154,7 @@ public class ArrayDeque<T>{
 		test1.printDeque();
 		System.out.println("");
 		System.out.println("size is " + test1.size());
-		 **/
 
-		/** addFirst loop
 		 test1.addFirst(0);
 		 test1.addFirst(1);
 		 test1.addFirst(2);
@@ -173,7 +171,5 @@ public class ArrayDeque<T>{
 		 test1.printDeque();
 		 System.out.println("");
 		 System.out.println("size is " + test1.size());
-**/
-
-	}
+	}**/
 }

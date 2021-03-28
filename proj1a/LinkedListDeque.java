@@ -108,20 +108,19 @@ public class LinkedListDeque<T> {
 
 	/** Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
 	 If no such item exists, returns null. Must not alter the deque! */
-	/**
-	public T getRecursive(int index) {
-		Node current = getNode(index);
-		return current.item;
+
+	private T getRecursiveHelper(Node currentNode, int index) {
+		if (index == 0){
+			return currentNode.item;
+		}
+		return getRecursiveHelper(currentNode.next , index - 1);
 	}
 
-
-	public Node getNode(int index){
-		Node p = sentinel;
-		if (index == 0) {
-			return p.next.item;
+	public T getRecursive(int index){
+		if (index >= size) {
+			return null;
 		}
-		return first.getRecursive(index-1);
-	} **/
+		return getRecursiveHelper(sentinel.next, index);
+	}
 }
-
 
