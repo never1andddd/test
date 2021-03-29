@@ -1,10 +1,10 @@
 /** Performs some basic linked list tests. */
 public class ArrayDeque<T> {
-		private T[] items;
-		private int size;
-		private int nextFirst;
-		private int nextLast;
-		private static int RFACTOR = 2;
+	private T[] items;
+	private int size;
+	private int nextFirst;
+	private int nextLast;
+	private static int RFACTOR = 2;
 
 	/** Creates an empty list. */
 	public ArrayDeque() {
@@ -16,16 +16,18 @@ public class ArrayDeque<T> {
 	/** Node forward;
 	 *
 	 */
-	private  int onePlus(int index){
-		if (index==items.length-1){
+	private  int onePlus(int index) {
+		if (index == items.length - 1){
 			return 0;
-		}else return index + 1;
+		}else {
+			return index + 1;
+		}
 	}
 
-	private  int oneMinus(int index){
+	private  int oneMinus(int index) {
 		if (index == 0){
 			return items.length - 1;
-		}else {
+		} else {
 			return index - 1;
 		}
 	}
@@ -41,7 +43,7 @@ public class ArrayDeque<T> {
 			System.arraycopy(items, currentFirst, a, items.length + currentFirst, items.length - currentFirst);
 			nextFirst = items.length + currentLast;
 			items = a;
-		}else{
+		} else {
 			int currentLength = currentLast - currentFirst + 1;
 			System.arraycopy(items, currentFirst, a, 0, currentLength);
 			items = a;
@@ -51,7 +53,7 @@ public class ArrayDeque<T> {
 	}
 
 	/** Adds an item of type T to the front of the deque. */
-	public void addFirst(T item){
+	public void addFirst(T item) {
 		items[nextFirst] = item;
 		nextFirst = oneMinus(nextFirst);
 		size += 1;
@@ -61,7 +63,7 @@ public class ArrayDeque<T> {
 	}
 
 	/** Adds an item of type T to the back of the deque. */
-	public void addLast(T item){
+	public void addLast(T item) {
 		items[nextLast] = item;
 		size += 1;
 		nextLast = onePlus(nextLast);
@@ -71,27 +73,27 @@ public class ArrayDeque<T> {
 	}
 
 	/** Returns true if deque is empty, false otherwise. */
-	public boolean isEmpty(){
+	public boolean isEmpty() {
 		if (size == 0){
 				return Boolean.TRUE;
-			}else {
+			} else {
 			return Boolean.FALSE;
 		}
 	}
 
 	/** Returns the number of items in the deque. */
-	public int size(){
+	public int size() {
 		return size;
 	}
 	/** Prints the items in the deque from first to last, separated by a space. */
-	public void printDeque(){
-		for (int i = 0; i<items.length; i++) {
+	public void printDeque() {
+		for (int i = 0; i < items.length; i++) {
 			System.out.print(items[i] + " ");
 		}
 	}
 	/** Removes and returns the item at the front of the deque. If no such item exists, returns null. */
-	public T removeFirst(){
-		if (this.isEmpty()){
+	public T removeFirst() {
+		if (this.isEmpty()) {
 			return null;
 		}
 		T itemToReturn = items[onePlus(nextFirst)];
@@ -100,14 +102,14 @@ public class ArrayDeque<T> {
 		items[onePlus(nextFirst)] = null;
 		nextFirst = onePlus(nextFirst);
 		size -= 1;
-		if (items.length > 16 && size<items.length*0.25){
+		if (items.length > 16 && size < items.length * 0.25) {
 			resize(size /RFACTOR);
 		}
 		return itemToReturn;
 	}
 	/** Removes and returns the item at the back of the deque. If no such item exists, returns null. */
-	public T removeLast(){
-		if (this.isEmpty()){
+	public T removeLast() {
+		if (this.isEmpty()) {
 			return null;
 		}
 		T itemToReturn = items[oneMinus(nextLast)];
@@ -116,20 +118,20 @@ public class ArrayDeque<T> {
 		items[oneMinus(nextLast)] = null;
 		nextLast = oneMinus(nextLast);
 		size -= 1;
-		if (items.length > 16 && size<items.length*0.25){
+		if (items.length > 16 && size < items.length*0.25) {
 			resize(size /RFACTOR);
 		}
 		return itemToReturn;
 	}
 	/** Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
 	 If no such item exists, returns null. Must not alter the deque! */
-	public T get(int index){
-		if (index >= items.length){
+	public T get(int index) {
+		if (index >= items.length) {
 			return null;
 		}
-		if (nextFirst + 1 + index > items.length){
+		if (nextFirst + 1 + index > items.length) {
 			return items[nextFirst + 1 + index - items.length];
-		}else {
+		} else {
 			return items[nextFirst + index + 1];
 		}
 	}
@@ -163,6 +165,8 @@ public class ArrayDeque<T> {
 		 test1.addFirst(2);
 		 test1.addFirst(3);
 		 test1.removeFirst();
+		 test1.removeLast();
+		 test1.removeLast();
 		 test1.printDeque();
 		 System.out.println("");
 		 test1.addFirst(4);
