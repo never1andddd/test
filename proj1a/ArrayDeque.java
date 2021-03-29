@@ -138,7 +138,7 @@ public class ArrayDeque<T> {
 			return items[nextFirst + index + 1];
 		}
 	}
-
+/**
 	public static void main(String[] args) {
 		ArrayDeque<Integer> test1 = new ArrayDeque<Integer>();
 		 test1.addFirst(0);
@@ -161,6 +161,6 @@ public class ArrayDeque<T> {
 		 System.out.println("0th item is " +test1.get(0));
 		 System.out.println("");
 		 test1.printDeque();
- }
+ } **/
 
 }
