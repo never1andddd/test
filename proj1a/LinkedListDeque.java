@@ -1,8 +1,8 @@
 public class LinkedListDeque<T> {
 	private class Node{
-		public T item;
-		public Node next;
-		public Node prev;
+		private T item;
+		private Node next;
+		private Node prev;
 
 		Node(T i, Node p, Node n) {
 			this.item = i;
@@ -107,10 +107,10 @@ public class LinkedListDeque<T> {
 		if (index == 0) {
 			return currentNode.item;
 		}
-		return getRecursiveHelper(currentNode.next , index - 1);
+		return getRecursiveHelper(currentNode.next, index - 1);
 	}
 
-	public T getRecursive(int index){
+	public T getRecursive(int index) {
 		if (index >= size) {
 			return null;
 		}
