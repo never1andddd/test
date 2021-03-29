@@ -4,7 +4,7 @@ public class LinkedListDeque<T> {
 		public Node next;
 		public Node prev;
 
-		public Node(T i, Node p, Node n){
+		private Node(T i, Node p, Node n){
 			this.item = i;
 			this.next = n;
 			this.prev = p;
@@ -20,14 +20,6 @@ public class LinkedListDeque<T> {
 		sentinel = new Node(null,null, null);
 		sentinel.next = sentinel;
 		sentinel.prev = sentinel;
-	}
-
-	public LinkedListDeque(T item){
-		size = 1;
-		sentinel = new Node(item,null,null);
-		Node newNode = new Node(item, sentinel, sentinel);
-		sentinel.next = newNode;
-		sentinel.prev = newNode;
 	}
 
 	/** Adds an item of type T to the front of the deque. */
@@ -77,17 +69,19 @@ public class LinkedListDeque<T> {
 		}
 		sentinel.next=first.next;
 		first.next.prev=sentinel;
+		size -= 1;
 		return first.item;
 	}
 	/** Removes and returns the item at the back of the deque. If no such item exists, returns null. */
 	public T removeLast(){
-		Node back = sentinel.prev;
+		T back = sentinel.prev.item;
 		if (back == sentinel) {
 			return null;
 		}
-		sentinel.prev=back.prev;
-		back.prev.next=sentinel;
-		return back.item;
+		sentinel.prev=sentinel.prev.prev;
+		sentinel.prev.next=sentinel;
+		size -= 1;
+		return back;
 	}
 	/** Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
 	 If no such item exists, returns null. Must not alter the deque! */

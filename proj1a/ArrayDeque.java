@@ -1,5 +1,5 @@
 /** Performs some basic linked list tests. */
-public class ArrayDeque<T>{
+public class ArrayDeque<T> {
 		private T[] items;
 		private int size;
 		private int nextFirst;
