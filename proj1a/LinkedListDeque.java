@@ -1,10 +1,10 @@
 public class LinkedListDeque<T> {
-	public class Node{
+	private class Node{
 		public T item;
 		public Node next;
 		public Node prev;
 
-		private Node(T i, Node p, Node n){
+		Node(T i, Node p, Node n){
 			this.item = i;
 			this.next = n;
 			this.prev = p;
@@ -75,7 +75,7 @@ public class LinkedListDeque<T> {
 	/** Removes and returns the item at the back of the deque. If no such item exists, returns null. */
 	public T removeLast(){
 		T back = sentinel.prev.item;
-		if (back == sentinel) {
+		if (sentinel.prev == sentinel) {
 			return null;
 		}
 		sentinel.prev=sentinel.prev.prev;

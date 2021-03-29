@@ -102,11 +102,11 @@ public class ArrayDeque<T> {
 		if (this.isEmpty()){
 			return null;
 		}
-		T itemToReturn = items[nextFirst+1];
+		T itemToReturn = items[onePlus(nextFirst)];
 		/* setting to zero not strictly necessary, but
 		 * it's a good habit (we'll see why soon) */
-		items[nextFirst + 1] = null;
-		nextFirst += 1;
+		items[onePlus(nextFirst)] = null;
+		nextFirst = onePlus(nextFirst);
 		size -= 1;
 		if (items.length > 16 && size<items.length*0.25){
 			resize(size /RFACTOR);
@@ -121,8 +121,8 @@ public class ArrayDeque<T> {
 		T itemToReturn = items[nextLast - 1];
 		/* setting to zero not strictly necessary, but
 		 * it's a good habit (we'll see why soon) */
-		items[nextLast - 1] = null;
-		nextLast -= 1;
+		items[oneMinus(nextLast)] = null;
+		nextLast = oneMinus(nextLast);
 		size -= 1;
 		if (items.length > 16 && size<items.length*0.25){
 			resize(size /RFACTOR);
@@ -132,7 +132,14 @@ public class ArrayDeque<T> {
 	/** Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
 	 If no such item exists, returns null. Must not alter the deque! */
 	public T get(int index){
-		return items[index];
+		if (index >= items.length){
+			return null;
+		}
+		if (nextFirst + 1 + index > items.length){
+			return items[nextFirst + 1 + index - items.length];
+		}else {
+			return items[nextFirst + index + 1];
+		}
 	}
 /**
 	public static void main(String[] args) {
@@ -144,6 +151,9 @@ public class ArrayDeque<T> {
 		test1.addLast(3);
 		test1.addLast(4);
 		test1.addLast(5);
+		System.out.println("Index 5 " + test1.get(5));
+		test1.printDeque();
+		System.out.println("");
 		test1.addLast(6);
 		test1.addLast(7);
 		test1.removeFirst();
@@ -155,21 +165,23 @@ public class ArrayDeque<T> {
 		System.out.println("");
 		System.out.println("size is " + test1.size());
 
+
 		 test1.addFirst(0);
 		 test1.addFirst(1);
 		 test1.addFirst(2);
 		 test1.addFirst(3);
+		 test1.removeFirst();
+		 test1.printDeque();
+		 System.out.println("");
 		 test1.addFirst(4);
 		 test1.addFirst(5);
-		 test1.addFirst(6);
-		 test1.addFirst(7);
-		 test1.removeLast();
-		 test1.addFirst(9);
-		 test1.addFirst(10);
-		 test1.removeLast();
-
+		 test1.printDeque();
+		 System.out.println("nextLast is " + test1.nextLast);
+		 System.out.println("nextFirst is " + test1.nextFirst);
+		 test1.removeFirst();
 		 test1.printDeque();
 		 System.out.println("");
 		 System.out.println("size is " + test1.size());
-	}**/
+ }**/
+
 }
