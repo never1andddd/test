@@ -53,12 +53,8 @@ public class ArrayDeque<T> {
 	/** Adds an item of type T to the front of the deque. */
 	public void addFirst(T item){
 		items[nextFirst] = item;
-		nextFirst -= 1;
-		if (nextFirst == -1){
-			nextFirst = items.length-1;
-		}
+		nextFirst = oneMinus(nextFirst);
 		size += 1;
-
 		if (size == items.length) {
 			resize(size * RFACTOR);
 		}
@@ -68,11 +64,7 @@ public class ArrayDeque<T> {
 	public void addLast(T item){
 		items[nextLast] = item;
 		size += 1;
-		nextLast += 1;
-		if (nextLast == items.length){
-			nextLast = 0;
-		}
-
+		nextLast = onePlus(nextLast);
 		if (size == items.length) {
 			resize(size * RFACTOR);
 		}
@@ -118,7 +110,7 @@ public class ArrayDeque<T> {
 		if (this.isEmpty()){
 			return null;
 		}
-		T itemToReturn = items[nextLast - 1];
+		T itemToReturn = items[oneMinus(nextLast)];
 		/* setting to zero not strictly necessary, but
 		 * it's a good habit (we'll see why soon) */
 		items[oneMinus(nextLast)] = null;
