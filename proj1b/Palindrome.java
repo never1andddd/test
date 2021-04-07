@@ -1,7 +1,7 @@
 public class Palindrome {
     public Deque<Character> wordToDeque(String word) {
         Deque<Character> result = new LinkedListDeque<>();
-        for (int i=0; i < word.length(); i++) {
+        for (int i = 0; i < word.length(); i++) {
             result.addLast(word.charAt(i));
         }
         return result;
@@ -20,7 +20,7 @@ public class Palindrome {
         return Boolean.TRUE;
     }
 
-    public boolean isPalindrome(String word, CharacterComparator cc){
+    public boolean isPalindrome(String word, CharacterComparator cc) {
         Deque<Character> wordDeque = wordToDeque(word);
         int length = word.length();
         for (int i = 0; i < length / 2; i++) {
