@@ -1,5 +1,5 @@
 public class LinkedListDeque<T> implements Deque<T> {
-	private class Node{
+	private class Node {
 		private T item;
 		private Node next;
 		private Node prev;
@@ -17,7 +17,7 @@ public class LinkedListDeque<T> implements Deque<T> {
 	/**creates an empty list.*/
 	public LinkedListDeque() {
 		size = 0;
-		sentinel = new Node(null,null, null);
+		sentinel = new Node(null, null, null);
 		sentinel.next = sentinel;
 		sentinel.prev = sentinel;
 	}
@@ -104,7 +104,7 @@ public class LinkedListDeque<T> implements Deque<T> {
 			index -= 1;
 			currentNode = currentNode.next;
 		}
-		if (index != 1){
+		if (index != 1) {
 			return null;
 		}
 		return currentNode.item;

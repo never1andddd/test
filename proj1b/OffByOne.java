@@ -7,6 +7,5 @@ public class OffByOne implements CharacterComparator {
         } else {
             return Boolean.FALSE;
         }
-
     }
 }

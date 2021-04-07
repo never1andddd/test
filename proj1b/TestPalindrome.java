@@ -34,14 +34,15 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("acfedb", cc));
         assertTrue(palindrome.isPalindrome("", cc));
     }
-
-    /**@Test
+/**
+    @Test
     public void testIsPalindrome3() {
         CharacterComparator cc = new OffByN(5);
-        assertFalse(palindrome.isPalindrome("cat", cc));
+        assertFalse(palindrome.isPalindrome("aba", cc));
         assertTrue(palindrome.isPalindrome("a", cc));
         assertTrue(palindrome.isPalindrome("afblgaf", cc));
         assertTrue(palindrome.isPalindrome("afbgaf", cc));
         assertTrue(palindrome.isPalindrome("", cc));
-    }**/
+    }
+    **/
 }
