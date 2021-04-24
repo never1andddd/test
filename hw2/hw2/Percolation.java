@@ -10,13 +10,15 @@ public class Percolation {
     private int opened;
     public Percolation(int N) {
         // create N-by-N grid, with all sites initially blocked
-        if (N <= 0) throw new java.lang.IllegalArgumentException("Illegal argument");
+        if (N <= 0) {
+            throw new java.lang.IllegalArgumentException("Illegal argument");
+        }
         this.grid = new Boolean[N][N];
         this.N = N;
         this.opened = 0;
         this.p = new WeightedQuickUnionUF(N * N + 2);
-        for (int i = 0; i < N; i ++){
-            for (int j = 0; j < N; j ++){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
                 grid[i][j] = Boolean.FALSE;
                 if (i == 0) {
                     p.union(xyTo1D(i, j), N * N);
@@ -29,62 +31,71 @@ public class Percolation {
     }
 
     // convert grid number to index
-    private int xyTo1D(int row, int col){
+    private int xyTo1D(int row, int col) {
         int index = row * N + col;
         return index;
     }
 
     // check if the row and col number is valid
-    private boolean validIndex(int row, int col){
-        if (row >= 0 && row <= N - 1 && col >= 0 && col <= N - 1){
+    private boolean validIndex(int row, int col) {
+        if (row >= 0 && row <= N - 1 && col >= 0 && col <= N - 1) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
 
     private void connectTogether(int row, int col, int row2, int col2) {
-        if (validIndex(row2, col2)) {
-            if (isOpen(row2, col2)) p.union(xyTo1D(row, col), xyTo1D(row2, col2));
+        if (validIndex(row2, col2) && isOpen(row2, col2)) {
+                p.union(xyTo1D(row, col), xyTo1D(row2, col2));
         }
     }
 
     public void open(int row, int col) {
         // open the site (row, col) if it is not open already
-        if (!validIndex(row, col))
+        if (!validIndex(row, col)) {
             throw new java.lang.IndexOutOfBoundsException("Index out of bound");
+        }
+
         if (!isOpen(row, col)) {
             grid[row][col] = Boolean.TRUE;
             opened += 1;
-            connectTogether(row,col, row + 1, col);
-            connectTogether(row,col, row - 1, col);
-            connectTogether(row,col, row, col + 1);
-            connectTogether(row,col, row, col - 1);
+            connectTogether(row, col, row + 1, col);
+            connectTogether(row, col, row - 1, col);
+            connectTogether(row, col, row, col + 1);
+            connectTogether(row, col, row, col - 1);
         }
     }
 
     public boolean isOpen(int row, int col) {
         // is the site (row, col) open?
-        if (!validIndex(row, col))
+        if (!validIndex(row, col)) {
             throw new java.lang.IndexOutOfBoundsException("Index out of bound");
+        }
         return grid[row][col];
     }
     public boolean isFull(int row, int col) {
         // is the site (row, col) full?
-        if (!validIndex(row, col))
+        if (!validIndex(row, col)) {
             throw new java.lang.IndexOutOfBoundsException("Index out of bound");
+        }
         return p.connected(xyTo1D(row, col),N * N) && isOpen(row, col);
     }
+
     public int numberOfOpenSites() {
         // number of open sites
         return opened;
     }
+
+    // does the system percolate?
     public boolean percolates() {
-        // does the system percolate?
-        if (N == 1 && !isOpen(0,0)){
+        if (N == 1 && !isOpen(0, 0)) {
             return Boolean.FALSE;
         }
         return p.connected(N * N, N * N + 1);
     }
+
+    /**
+    // use for unit testing (not required)
     public static void main(String[] args) {
         int N = 5;
         Percolation sample = new Percolation(N);
@@ -100,5 +111,6 @@ public class Percolation {
         System.out.println(sample.numberOfOpenSites());
         System.out.println(fraction);
 
-    }  // use for unit testing (not required)
+    }
+     **/
 }
