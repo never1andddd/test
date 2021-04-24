@@ -1,7 +1,6 @@
 package hw2;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-import edu.princeton.cs.introcs.StdRandom;
 
 public class Percolation {
     private int N;
@@ -46,7 +45,7 @@ public class Percolation {
 
     private void connectTogether(int row, int col, int row2, int col2) {
         if (validIndex(row2, col2) && isOpen(row2, col2)) {
-                p.union(xyTo1D(row, col), xyTo1D(row2, col2));
+        	p.union(xyTo1D(row, col), xyTo1D(row2, col2));
         }
     }
 
@@ -78,7 +77,7 @@ public class Percolation {
         if (!validIndex(row, col)) {
             throw new java.lang.IndexOutOfBoundsException("Index out of bound");
         }
-        return p.connected(xyTo1D(row, col),N * N) && isOpen(row, col);
+        return p.connected(xyTo1D(row, col), N * N) && isOpen(row, col);
     }
 
     public int numberOfOpenSites() {
@@ -94,7 +93,7 @@ public class Percolation {
         return p.connected(N * N, N * N + 1);
     }
 
-    /**
+    
     // use for unit testing (not required)
     public static void main(String[] args) {
         int N = 5;
@@ -112,5 +111,5 @@ public class Percolation {
         System.out.println(fraction);
 
     }
-     **/
+     
 }

@@ -21,7 +21,7 @@ public class PercolationStats {
     }
 
     private void simulate() {
-        for (int i = 0; i < T; i ++) {
+        for (int i = 0; i < T; i++) {
             Percolation sample = pf.make(N);
             while (!sample.percolates()) {
                 int col = StdRandom.uniform(0, N);
