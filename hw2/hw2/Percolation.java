@@ -83,7 +83,6 @@ public class Percolation {
         return p.connected(N * N, N * N + 1);
     }
     public static void main(String[] args) {
-
         int N = 5;
         Percolation sample = new Percolation(N);
         //System.out.println(sample.percolates());

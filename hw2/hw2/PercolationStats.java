@@ -5,23 +5,28 @@ import edu.princeton.cs.introcs.StdRandom;
 
 public class PercolationStats {
     private int T;
+    private int N;
+    private PercolationFactory pf;
     private double[] FractionArray;
     public PercolationStats(int N, int T, PercolationFactory pf){
         // perform T independent experiments on an N-by-N grid
         if (N <= 0 | T <= 0) throw new java.lang.IllegalArgumentException("Illegal Negative Argument");
         this.T = T;
         this.FractionArray = new double[T];
+        simulate();
+    }
+
+    private void simulate(){
         for (int i = 0; i < T; i ++) {
             Percolation sample = pf.make(N);
             while (!sample.percolates()) {
                 int col = StdRandom.uniform(0, N);
                 int row = StdRandom.uniform(0, N);
-                if (sample.isOpen(col, row)) sample.open(col,row);
+                if (!sample.isOpen(col, row)) sample.open(col,row);
             }
             double fraction = sample.numberOfOpenSites() / (N * N);
             FractionArray[i] = fraction;
         }
-
     }
     public double mean() {
         // sample mean of percolation threshold
