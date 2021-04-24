@@ -80,6 +80,9 @@ public class Percolation {
     }
     public boolean percolates() {
         // does the system percolate?
+        if (N == 1 && !isOpen(0,0)){
+            return Boolean.FALSE;
+        }
         return p.connected(N * N, N * N + 1);
     }
     public static void main(String[] args) {
