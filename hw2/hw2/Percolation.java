@@ -4,10 +4,10 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import edu.princeton.cs.introcs.StdRandom;
 
 public class Percolation {
-    public int N;
+    private int N;
     private WeightedQuickUnionUF p;
-    public Boolean[][] grid;
-    public int opened;
+    private Boolean[][] grid;
+    private int opened;
     public Percolation(int N) {
         // create N-by-N grid, with all sites initially blocked
         if (N <= 0) throw new java.lang.IllegalArgumentException("Illegal argument");
@@ -29,20 +29,20 @@ public class Percolation {
     }
 
     // convert grid number to index
-    public int xyTo1D(int row, int col){
+    private int xyTo1D(int row, int col){
         int index = row * N + col;
         return index;
     }
 
     // check if the row and col number is valid
-    public boolean validIndex(int row, int col){
+    private boolean validIndex(int row, int col){
         if (row >= 0 && row <= N - 1 && col >= 0 && col <= N - 1){
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
 
-    public void connectTogether(int row, int col, int row2, int col2) {
+    private void connectTogether(int row, int col, int row2, int col2) {
         if (validIndex(row2, col2)) {
             if (isOpen(row2, col2)) p.union(xyTo1D(row, col), xyTo1D(row2, col2));
         }
@@ -52,12 +52,14 @@ public class Percolation {
         // open the site (row, col) if it is not open already
         if (!validIndex(row, col))
             throw new java.lang.IndexOutOfBoundsException("Index out of bound");
-        grid[row][col] = Boolean.TRUE;
-        opened += 1;
-        connectTogether(row,col, row + 1, col);
-        connectTogether(row,col, row - 1, col);
-        connectTogether(row,col, row, col + 1);
-        connectTogether(row,col, row, col - 1);
+        if (!isOpen(row, col)) {
+            grid[row][col] = Boolean.TRUE;
+            opened += 1;
+            connectTogether(row,col, row + 1, col);
+            connectTogether(row,col, row - 1, col);
+            connectTogether(row,col, row, col + 1);
+            connectTogether(row,col, row, col - 1);
+        }
     }
 
     public boolean isOpen(int row, int col) {

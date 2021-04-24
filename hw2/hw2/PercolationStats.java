@@ -4,14 +4,12 @@ import edu.princeton.cs.introcs.StdStats;
 import edu.princeton.cs.introcs.StdRandom;
 
 public class PercolationStats {
-    int T;
-    int N;
-    double[] FractionArray;
+    private int T;
+    private double[] FractionArray;
     public PercolationStats(int N, int T, PercolationFactory pf){
         // perform T independent experiments on an N-by-N grid
         if (N <= 0 | T <= 0) throw new java.lang.IllegalArgumentException("Illegal Negative Argument");
         this.T = T;
-        this.N = N;
         this.FractionArray = new double[T];
         for (int i = 0; i < T; i ++) {
             Percolation sample = pf.make(N);
@@ -20,7 +18,7 @@ public class PercolationStats {
                 int row = StdRandom.uniform(0, N);
                 if (sample.isOpen(col, row)) sample.open(col,row);
             }
-            double fraction = sample.opened / (N * N);
+            double fraction = sample.numberOfOpenSites() / (N * N);
             FractionArray[i] = fraction;
         }
 
