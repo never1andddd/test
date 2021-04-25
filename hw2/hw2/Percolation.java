@@ -2,6 +2,7 @@ package hw2;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
+
 public class Percolation {
     private int N;
     private WeightedQuickUnionUF p;
@@ -96,6 +97,7 @@ public class Percolation {
     
     // use for unit testing (not required)
     public static void main(String[] args) {
+        /**
         int N = 5;
         Percolation sample = new Percolation(N);
         //System.out.println(sample.percolates());
@@ -109,7 +111,7 @@ public class Percolation {
         double fraction = (double) sample.opened / (N * N);
         System.out.println(sample.numberOfOpenSites());
         System.out.println(fraction);
-
+         **/
     }
      
 }
