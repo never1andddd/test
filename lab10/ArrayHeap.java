@@ -141,11 +141,10 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
 
         // add x, and percolate it up to maintain heap invariant
-        contents[size + 1] = new ArrayHeap<T>.Node(item, priority);
+        int index = size + 1;
+        contents[index] = new Node(item, priority);
         size += 1;
-        if (size > 1) {
-            swim(size);
-        }
+        swim(index);
     }
 
     /**
@@ -154,7 +153,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public T peek() {
-        T returnValue = contents[1].myItem;
+        T returnValue = contents[1].item();
         return returnValue;
     }
 
@@ -173,12 +172,14 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             throw new java.util.NoSuchElementException("Priority queue underflow");
         }
         Node min = contents[1];
-        swap(1, size);
+        int last = size;
+        swap(1, last);
+        contents[last] = null;     // to avoid loitering and help with garbage collection
         size -= 1;
-        sink(1);
-        contents[size+1] = null;     // to avoid loitering and help with garbage collection
-
-        return min.myItem;
+        if (size > 0) {
+            sink(1);
+        }
+        return min.item();
     }
 
     private boolean isEmpty() {
@@ -204,17 +205,17 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public void changePriority(T item, double priority) {
-        /* TODO: Your code here! */
-        for (int i = 0; i < size; i++) {
-            if (contents[i].myItem.equals(item)){
-                double oldPriority = contents[i].myPriority;
-                contents[i].myPriority = priority;
+        for (int i = 1; i <= size; i++) {
+            if (contents[i].item().equals(item)){
+                double oldPriority = contents[i].priority();
+                Node newNode = new Node(item, priority);
+                contents[i] = newNode;
                 if (priority < oldPriority) {
                     swim(i);
                 } else if (priority > oldPriority) {
                     sink(i);
                 }
-                break;
+                return;
             }
         }
     }
