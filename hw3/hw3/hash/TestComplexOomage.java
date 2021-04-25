@@ -9,26 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestComplexOomage {
-    private static class NiceSpreadComplexOomage implements Oomage {
-        private int val;
 
-        @Override
-        public void draw(double x, double y, double scalingFactor) {
-            return;
-        }
-
-        @Override
-        public int hashCode() {
-            return val;
-        }
-
-        public static NiceSpreadComplexOomage randomNiceSpreadComplexOomage() {
-            NiceSpreadComplexOomage x = new NiceSpreadComplexOomage();
-            x.val = StdRandom.uniform(0, 1000000);
-            return x;
-        }
-
-    }
     @Test
     public void testHashCodeDeterministic() {
         ComplexOomage so = ComplexOomage.randomComplexOomage();
@@ -53,23 +34,30 @@ public class TestComplexOomage {
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(oomages, 10));
     }
 
-    //TODO: Create a list of Complex Oomages called deadlyList
     @Test
     public void testWithDeadlyParams() {
         List<Oomage> deadlyList = new ArrayList<>();
         int N = 10000;
-        ArrayList<Integer> params = new ArrayList<>(N);
+
+        //int型整数相乘，结果只会保留低32位，高位会抛弃掉。所以num * 16L的值与0xffffffff做位与操作
+        // （即取后32位）就可以得到实际运算的结果了。
         for (int i = 0; i < N; i += 1) {
-            params.add(255);
-        }
-        // Your code here.
-        for (int i = 0; i < N; i += 1) {
+            ArrayList<Integer> params = new ArrayList<>(8);
+            // first 32 bits
+            for (int j = 0; j < 4; j += 1) {
+                params.add(StdRandom.uniform(255));
+            }
+            // additional fixed 32 bits
+            for (int j = 0; j < 4; j += 1) {
+                params.add(1);
+            }
+
             deadlyList.add(new ComplexOomage(params));
         }
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
     }
 
-    /** Calls tests for SimpleOomage. */
+    /** Calls tests for ComplexOomage. */
     public static void main(String[] args) {
         jh61b.junit.textui.runClasses(TestComplexOomage.class);
     }

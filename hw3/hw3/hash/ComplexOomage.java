@@ -12,9 +12,11 @@ public class ComplexOomage implements Oomage {
     @Override
     public int hashCode() {
         int total = 0;
+        //System.out.println(params.toString());
         for (int x : params) {
-            total = total * 256;
+            total = total * 257;
             total = total + x;
+            //System.out.println("total: " + total);
         }
         return total;
     }
@@ -77,6 +79,7 @@ public class ComplexOomage implements Oomage {
         for (int i = 0; i < N; i += 1) {
             params.add(StdRandom.uniform(0, 255));
         }
+        //System.out.println(params.toString());
         return new ComplexOomage(params);
     }
 
