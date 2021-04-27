@@ -17,7 +17,6 @@ public class MazeBreadthFirstPaths extends MazeExplorer {
 
     private int s;
     private int t;
-    private boolean targetFound = false;
     private Maze maze;
     private Queue<Integer> q = new LinkedList<>();
 
@@ -29,17 +28,15 @@ public class MazeBreadthFirstPaths extends MazeExplorer {
         t = maze.xyTo1D(targetX, targetY);
         distTo[s] = 0;
         edgeTo[s] = s;
+        marked[s] = true;
         q.add(s);
     }
 
     /** Conducts a breadth first search of the maze starting at the source. */
     private void bfs() {
-
-        // TODO: Your code here. Don't forget to update distTo, edgeTo, and marked, as well as call announce()
         while (!q.isEmpty()) {
             int v = q.remove();
             if (v == t) {
-                targetFound = true;
                 return;
             }
             for (int w : maze.adj(v)) {
