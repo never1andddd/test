@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Class for doing Radix sort
  *
@@ -17,7 +19,22 @@ public class RadixSort {
      */
     public static String[] sort(String[] asciis) {
         // TODO: Implement LSD Sort
-        return null;
+        int max = Integer.MIN_VALUE;
+        for (String i : asciis) {
+            max = max > i.length() ? max : i.length();
+        }
+        String[] returnString = new String[asciis.length];
+        for (int i = 0; i < asciis.length; i++) {
+            returnString[i] = asciis[i];
+            while (returnString[i].length()<max) {
+                returnString[i] = returnString[i] + "_";
+            }
+        }
+
+        for (int d = max - 1; d >= 0; d--) {
+            sortHelperLSD(returnString, d);
+        }
+        return returnString;
     }
 
     /**
@@ -28,7 +45,29 @@ public class RadixSort {
      */
     private static void sortHelperLSD(String[] asciis, int index) {
         // Optional LSD helper method for required LSD radix sort
-        return;
+        int N = asciis.length;
+        int R = 256;
+        String[] aux = new String[asciis.length];
+        int[] count = new int[R + 1]; // Compute frequency counts.
+        for (int i = 0; i < N; i++) {
+            int asciisCode = (int)asciis[i].charAt(index);
+            count[asciisCode + 1] += 1;
+        }
+        for (int r = 0; r < R; r++) {
+            // Transform counts to indices.
+            count[r+1] += count[r];
+        }
+
+        for (int i = 0; i < N; i++) {
+            // Distribute.
+            int auxCode = (int)asciis[i].charAt(index);
+            aux[count[auxCode]++] = asciis[i];
+        }
+
+        for (int i = 0; i < N; i++) {
+            // Copy back.
+            asciis[i] = aux[i];
+        }
     }
 
     /**
@@ -45,4 +84,9 @@ public class RadixSort {
         // Optional MSD helper method for optional MSD radix sort
         return;
     }
+/**
+    public static void main(String[] args) {
+        String[] student = new String[] {"vincent", "alice","ben", "ann",  "liz", "zoey","mary"};
+        System.out.println(Arrays.toString(sort(student)));
+    } */
 }
