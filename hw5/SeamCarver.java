@@ -20,7 +20,7 @@ public class SeamCarver {
 
     public Picture picture() {
         // current picture
-        return p;
+        return new Picture(this.p);
     }
     public int width() {
         // width of current picture
@@ -144,8 +144,8 @@ public class SeamCarver {
                 throw new java.lang.IllegalArgumentException("2 consecutive numbers differ more than 1");
             }
         }
-        SeamRemover remove = new SeamRemover();
-        remove.removeHorizontalSeam(p,seam);
+        this.p = new Picture(SeamRemover.removeHorizontalSeam(this.p, seam));
+        height--;
     }
     public void removeVerticalSeam(int[] seam) {
         if (seam.length != height) {
@@ -157,8 +157,9 @@ public class SeamCarver {
             }
         }
         // remove vertical seam from picture
-        SeamRemover remove = new SeamRemover();
-        remove.removeVerticalSeam(p,seam);
+        this.p = new Picture(SeamRemover.removeVerticalSeam(this.p, seam));
+        width--;
+
     }
 
     private class Pos implements Comparable<Pos> {
