@@ -13,7 +13,7 @@ public class SeamCarver {
     private boolean findGoal = false;
 
     public SeamCarver(Picture picture) {
-        this.p = picture;
+        this.p = new Picture(picture);
         this.width = picture.width();
         this.height = picture.height();
     }
@@ -101,7 +101,7 @@ public class SeamCarver {
                 neighbors = new int[]{-1, 0, 1};
                 //System.out.println("x is " + x + "neighbors include" + neighbors[1] + ", " + neighbors[2]);
             }
-            moveSeq = new MinPQ<>();
+
             //Let F be the last state in BMS.
             if (BMS.y == goal) {
                 //If F is the goal state, you’re done, so return BMS.
@@ -114,7 +114,9 @@ public class SeamCarver {
             for (int i : neighbors) {
                 double new_cost = BMS.cost_so_far + energy(BMS.x + i,BMS.y+1);
                 Pos newPos = new Pos(BMS.x+i, BMS.y+1, new_cost, BMS);
-                moveSeq.insert(newPos);
+                if (prev == null | (prev != null && !newPos.equals(prev))) {
+                    moveSeq.insert(newPos);
+                }
             }
         }
         return null;
